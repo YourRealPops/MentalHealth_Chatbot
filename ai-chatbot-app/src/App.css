@@ -1,15 +1,27 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   background-color: #f5f5f5;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#root {
+  height: 100vh;
 }
 
 .app {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  max-width: 1000px;
-  margin: 0 auto;
+  height: 100vh;
+  width: 100vw;
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -18,17 +30,19 @@ body {
   background-color: #4a90e2;
   color: white;
   text-align: center;
-  padding: 1rem;
+  padding: 1.5rem 1rem;
+  flex-shrink: 0;
 }
 
 .app-header h1 {
   margin: 0;
-  font-size: 1.8rem;
+  font-size: 2rem;
+  font-weight: 600;
 }
 
 .app-header p {
   margin: 0.5rem 0 0;
-  font-size: 1rem;
+  font-size: 1.1rem;
   opacity: 0.9;
 }
 
@@ -36,20 +50,23 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  overflow: hidden;
+  padding: 0;
 }
 
 .messages-container {
   flex: 1;
   overflow-y: auto;
-  padding: 1rem;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
+  gap: 1rem;
+  scroll-behavior: smooth;
 }
 
 .message {
-  margin-bottom: 1rem;
   display: flex;
+  width: 100%;
 }
 
 .bot-message {
@@ -62,28 +79,32 @@ body {
 
 .message-bubble {
   max-width: 70%;
-  padding: 0.75rem 1rem;
-  border-radius: 18px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  padding: 1rem 1.25rem;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   word-wrap: break-word;
+  line-height: 1.4;
+  font-size: 1rem;
 }
 
 .bot-message .message-bubble {
   background-color: #f0f0f0;
   color: #333;
-  border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 6px;
 }
 
 .user-message .message-bubble {
   background-color: #4a90e2;
   color: white;
-  border-bottom-right-radius: 4px;
+  border-bottom-right-radius: 6px;
 }
 
 .typing-indicator {
   display: flex;
   align-items: center;
-  padding: 0.5rem 1rem;
+  padding: 1rem 1.25rem;
+  background-color: #f0f0f0;
+  border-bottom-left-radius: 6px;
 }
 
 .typing-indicator span {
@@ -92,7 +113,7 @@ body {
   background-color: #888;
   border-radius: 50%;
   display: inline-block;
-  margin-right: 5px;
+  margin-right: 6px;
   animation: bounce 1.5s infinite ease-in-out;
 }
 
@@ -110,24 +131,27 @@ body {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
   }
 }
 
 .input-area {
   display: flex;
-  padding: 1rem;
+  padding: 1.5rem;
   background-color: #fff;
   border-top: 1px solid #e0e0e0;
+  flex-shrink: 0;
+  gap: 0.75rem;
 }
 
 .message-input {
   flex: 1;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 20px;
+  padding: 1rem 1.25rem;
+  border: 2px solid #ddd;
+  border-radius: 25px;
   font-size: 1rem;
   outline: none;
+  transition: border-color 0.2s ease;
 }
 
 .message-input:focus {
@@ -138,23 +162,203 @@ body {
   background-color: #4a90e2;
   color: white;
   border: none;
-  border-radius: 20px;
-  padding: 0 1.25rem;
-  margin-left: 0.5rem;
+  border-radius: 25px;
+  padding: 1rem 2rem;
   cursor: pointer;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
 }
 
 .send-button:hover {
   background-color: #3a80d2;
 }
 
+.send-button:active {
+  transform: translateY(1px);
+}
+
 .app-footer {
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   text-align: center;
   background-color: #f9f9f9;
   border-top: 1px solid #e0e0e0;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: #666;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+
+/* TABLET STYLES (768px - 1024px) */
+@media screen and (max-width: 1024px) and (min-width: 768px) {
+  .app-header {
+    padding: 1.25rem 1rem;
+  }
+  
+  .app-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .app-header p {
+    font-size: 1rem;
+  }
+  
+  .messages-container {
+    padding: 1.25rem;
+    gap: 0.875rem;
+  }
+  
+  .message-bubble {
+    max-width: 75%;
+    padding: 0.875rem 1.125rem;
+    font-size: 0.95rem;
+  }
+  
+  .input-area {
+    padding: 1.25rem;
+    gap: 0.625rem;
+  }
+  
+  .message-input {
+    padding: 0.875rem 1.125rem;
+    font-size: 0.95rem;
+  }
+  
+  .send-button {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.95rem;
+  }
+  
+  .app-footer {
+    padding: 0.875rem 1.25rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* MOBILE STYLES (up to 767px) */
+@media screen and (max-width: 767px) {
+  .app-header {
+    padding: 1rem 0.75rem;
+  }
+  
+  .app-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .app-header p {
+    font-size: 0.9rem;
+  }
+  
+  .messages-container {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+  
+  .message-bubble {
+    max-width: 85%;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 16px;
+  }
+  
+  .bot-message .message-bubble {
+    border-bottom-left-radius: 4px;
+  }
+  
+  .user-message .message-bubble {
+    border-bottom-right-radius: 4px;
+  }
+  
+  .typing-indicator {
+    padding: 0.75rem 1rem;
+    border-bottom-left-radius: 4px;
+  }
+  
+  .input-area {
+    padding: 1rem 0.75rem;
+    gap: 0.5rem;
+  }
+  
+  .message-input {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 20px;
+  }
+  
+  .send-button {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+    border-radius: 20px;
+  }
+  
+  .app-footer {
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* SMALL MOBILE STYLES (up to 480px) */
+@media screen and (max-width: 480px) {
+  .app-header {
+    padding: 0.875rem 0.5rem;
+  }
+  
+  .app-header h1 {
+    font-size: 1.25rem;
+  }
+  
+  .app-header p {
+    font-size: 0.85rem;
+  }
+  
+  .messages-container {
+    padding: 0.75rem;
+    gap: 0.625rem;
+  }
+  
+  .message-bubble {
+    max-width: 90%;
+    padding: 0.625rem 0.875rem;
+    font-size: 0.85rem;
+  }
+  
+  .input-area {
+    padding: 0.75rem 0.5rem;
+    gap: 0.375rem;
+  }
+  
+  .message-input {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.85rem;
+  }
+  
+  .send-button {
+    padding: 0.625rem 1rem;
+    font-size: 0.85rem;
+  }
+  
+  .app-footer {
+    padding: 0.625rem 0.75rem;
+    font-size: 0.7rem;
+  }
+}
+
+/* Scrollbar styling for webkit browsers */
+.messages-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.messages-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }
